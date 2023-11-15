@@ -36,8 +36,7 @@ authorizedAxiosInstance.interceptors.request.use((value) => {
 authorizedAxiosInstance.interceptors.response.use(
   (res) => res,
   (error) => {
-    const httpStatus = error?.response?.status as number;
-    const url = error.config.url;
+    const httpStatus = error?.response?.status;
 
     if (
       error.code === "ECONNABORTED" ||
@@ -49,14 +48,6 @@ authorizedAxiosInstance.interceptors.response.use(
       void message.error("当前操作无权限");
     } else if (httpStatus === 409) {
       void message.error("该数据有其他关联，无法删除");
-    } else if (httpStatus === 401 && !url.includes("/sign-in")) {
-      useAuthStore.setState({
-        accessToken: "",
-      });
-
-      if (typeof window !== "undefined") {
-        window.location.href = "/sign-in";
-      }
     }
 
     return Promise.reject(error);

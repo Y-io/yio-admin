@@ -1,7 +1,7 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import { RootLayout } from "@/layouts/RootLayout.tsx";
 import { AuthLayout } from "@/layouts/AuthLayout.tsx";
-import { authorizeLoader, AuthorizeWrap } from "@/layouts/AuthorizeWrap.tsx";
+import { AuthorizeWrap } from "@/layouts/AuthorizeWrap.tsx";
 import { SignInPage } from "@/pages/auth/sign-in.tsx";
 import { Dashboard } from "@/pages/dashboard.tsx";
 import { UserManagement } from "@/pages/system/users.tsx";
@@ -20,7 +20,7 @@ export const AppRoute = () => {
         <Route element={<AuthLayout />}>
           <Route path={"/sign-in"} element={<SignInPage />} />
         </Route>
-        <Route element={<AuthorizeWrap />} loader={authorizeLoader}>
+        <Route element={<AuthorizeWrap />}>
           <Route index element={<Navigate to={"/dashboard"} />} />
           <Route path={"/dashboard"} element={<Dashboard />} />
           <Route path={"/system"} element={<SystemLayout />}>

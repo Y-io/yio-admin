@@ -11,7 +11,7 @@ export const AccountSignInForm = (props: AccountLoginFormProps) => {
         label={"账号"}
         placeholder={"清输入账号"}
       />
-      <ProFormText
+      <ProFormText.Password
         name={"password"}
         label={"密码"}
         placeholder={"清输入密码"}
