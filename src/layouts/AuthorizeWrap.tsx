@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { AdminLayout } from "@/layouts/AdminLayout.tsx";
 
 import { useAccountProfile } from "@/query/hooks/account.ts";
@@ -11,6 +11,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import Result from "antd/es/result";
 
 export const AuthorizeWrap = () => {
+  const accessToken = useAuthStore((state) => state.accessToken);
   const accountProfile = useAccountProfile();
 
   const authorized = useMemo(() => {
@@ -23,11 +24,17 @@ export const AuthorizeWrap = () => {
     return true;
   }, [accountProfile]);
 
+  if (!accessToken) {
+    // token 不存在表示从未登录
+    return <Navigate to={"/sign-in"} replace />;
+  }
+
   if (accountProfile.isPending) {
     return <PageLoading />;
   }
 
   if (!authorized) {
+    // 登录失效
     return <Unauthorized />;
   }
 

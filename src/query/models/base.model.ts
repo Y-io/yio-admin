@@ -1,9 +1,11 @@
 export interface IBaseModal {
-  created: string;
-  updated: string;
+  id: string;
+  createdAt: Date;
+  updatedAt: Date;
+  deletedAt: Date;
 }
 
 export interface IPaginationRes<T = unknown> extends IPagination {
   total: number;
-  list: T;
+  list: T[];
 }
